@@ -19,6 +19,13 @@ public class User {
 
     private String name;
 
+    // Role of the user, set default value to USER
+    @Column(columnDefinition = "varchar(20) default 'USER'")
+    private String role;
+
+    public User() {
+    }
+
     public User(String name, String email, String password) {
         this.name = name;
         this.email = email;
