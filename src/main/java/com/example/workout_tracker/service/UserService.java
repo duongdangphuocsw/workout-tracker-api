@@ -1,7 +1,11 @@
 package com.example.workout_tracker.service;
 
+import com.example.workout_tracker.dto.UserDTO;
 import com.example.workout_tracker.model.User;
 import com.example.workout_tracker.repository.UserRepository;
+
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +19,19 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    // Get current user
+    public UserDTO getCurrentUser(String email) {
+        // Check if user exists
+        if (!userRepository.existsByEmail(email)) {
+            throw new UsernameNotFoundException("User not found");
+        }
+
+        User user = userRepository.findByEmail(email);
+
+        return new UserDTO(user.getId(), user.getName(), user.getEmail(), user.getRole());
+    }
+
+    // Get all users
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }

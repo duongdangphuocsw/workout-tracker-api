@@ -1,8 +1,12 @@
 package com.example.workout_tracker.controller;
 
+import com.example.workout_tracker.dto.UserDTO;
 import com.example.workout_tracker.model.User;
 import com.example.workout_tracker.service.UserService;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +19,17 @@ public class UserController {
 
     public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+    // Get current user
+    @GetMapping("/profile")
+    public ResponseEntity<UserDTO> getProfile() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        // Log auth
+        System.out.println("Auth: " + auth);
+        String email = auth.getName(); // Extracted email from JWT
+        UserDTO userDTO = userService.getCurrentUser(email);
+        return ResponseEntity.ok(userDTO);
     }
 
     // GET /api/users
