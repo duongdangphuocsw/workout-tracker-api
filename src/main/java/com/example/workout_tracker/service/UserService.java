@@ -4,7 +4,6 @@ import com.example.workout_tracker.dto.UserDTO;
 import com.example.workout_tracker.model.User;
 import com.example.workout_tracker.repository.UserRepository;
 
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
